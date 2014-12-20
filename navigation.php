@@ -9,7 +9,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="products.php">Spiering Songs</a>
+            <a class="navbar-brand" href="products.php">Satan's Playlist</a>
         </div>
         
         <div class="navbar-collapse collapse">
@@ -17,13 +17,13 @@
                 <li <?php echo $page_title=="Products" ? "class='active'" : ""; ?> >
                     <a href="products.php">Products</a>
                 </li>
-                <li <?php echo $page_title=="Cart" ? "class='active'" L ""; ?> >
+                <li <?php echo $page_title=="Cart" ? "class='active'" : ""; ?> >
                     <a href="cart.php">
                         <?php
                             // counts the products in the cart
                             $cart_count=count($_SESSION['cart_items']);
                         ?>
-                        Cart <span class="badge" id="comparison-count"><?php echo $cart_count; ?></span>
+                        The Devil's Grocery Bag <span class="badge" id="comparison-count"><?php echo $cart_count; ?></span>
                     </a>
                 </li>
             </ul>

@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-$page_title="Products";
+$page_title="Products That Will Make Your Parents Pray For Your Soul!";
 include 'layout_head.php';
 
 // this prevents the undefined index notice
@@ -28,7 +28,7 @@ if($action=='exists'){
     echo "</div>";
 }
 
-$query = "SELECT id, album, band, format, price FROM music_store ORDER BY band";
+$query = "SELECT id, album, band, format, price FROM products ORDER BY album";
 $stmt = $con->prepare( $query );
 $stmt->execute();
 
@@ -44,6 +44,7 @@ if($num>0){
             echo "<th>Band</th>";
             echo "<th>Format</th>";
             echo "<th>Price</th>";
+            echo "<th>Action</th>";
         echo "</tr>";
     
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
