@@ -8,11 +8,10 @@ include 'layout_head.php';
 $action = isset($_GET['action']) ? $_GET['action'] : "";
 $product_id = isset($_GET['product_id']) ? $_GET['product_id'] : "1";
 $album = isset($_GET['album']) ? $_GET['album'] : "";
-
-// other items not sure if needed
 $band = isset($_GET['band']) ? $_GET['band'] : "";
 $format = isset($_GET['format']) ? $_GET['format'] : "";
 $price = isset($_GET['price']) ? $_GET['price'] : "";
+$quantity = isset($_GET['quantity']) ? $_GET['quantity'] : "1";
 
 // This is the notification to tell you that item was added to cart
 if($action=='added'){
@@ -44,8 +43,13 @@ if($num>0){
             echo "<th>Band</th>";
             echo "<th>Format</th>";
             echo "<th>Price</th>";
+            echo "<th style='width:5em;'>Quantity</th>";
             echo "<th>Action</th>";
         echo "</tr>";
+    
+        if(!isset($_SESSION['cart'])){
+			$_SESSION['cart']=array();
+		}
     
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
         extract($row);
@@ -53,20 +57,36 @@ if($num>0){
         // creates the table row for each record
         echo "<tr>";
             echo "<td>";
-                echo "<div class='product_id' style='display:none;'>{$id}</div>";
+                echo "<div class='product-id' style='display:none;'>{$id}</div>";
                 echo "<div class='product-name'>{$album}</div>";
             echo "</td>";
             echo "<td>{$band}</td>";
             echo "<td>{$format}</td>";
             echo "<td>&#36;{$price}</td>";
+            if(array_key_exists($id, $_SESSION['cart'])){
+					$quantity=$_SESSION['cart'][$id]['quantity'];
+					
+					echo "<td>";
+							 echo "<input type='text' name='quantity' value='{$quantity}' disabled class='form-control' />";
+					echo "</td>";
             echo "<td>";
-                echo "<a href='add_to_cart.php?id={$id}&album={$album}' class='btn btn-primary'>";
-                    echo "<span class='glyphicon glyphicon-shopping-cart'></span>Add to cart";
-                echo "</a>";
-            echo "</td>";
-        echo "</tr>";
-    }
-    
+						echo "<button class='btn btn-success' disabled>";
+							echo "<span class='glyphicon glyphicon-shopping-cart'></span> Added!";
+						echo "</button>";
+					echo "</td>";				
+				}else{
+					echo "<td>";
+							 echo "<input type='text' name='quantity' value='1' class='form-control' />";
+					echo "</td>";
+					echo "<td>";
+						echo "<button class='btn btn-primary add-to-cart'>";
+							echo "<span class='glyphicon glyphicon-shopping-cart'></span> Add to cart";
+						echo "</button>";
+					echo "</td>";
+				}
+            echo "</tr>";
+        }
+		
     echo "</table>";
 }
 

@@ -11,7 +11,7 @@ include 'config/db_connect.php';
     <!--prevent search engines from indexing this site-->
     <meta name="robots" content="noindex">
  
-    <title><?php echo isset($page_title) ? $page_title : "Music Store"; ?> - LIVE DEMO</title>
+    <title><?php echo isset($page_title) ? $page_title : "Music Store"; ?></title>
  
     <!-- Bootstrap -->
     <!-- Latest compiled and minified CSS -->

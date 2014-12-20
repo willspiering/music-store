@@ -21,7 +21,7 @@
                     <a href="cart.php">
                         <?php
                             // counts the products in the cart
-                            $cart_count=count($_SESSION['cart_items']);
+                            $cart_count=count($_SESSION['cart']);
                         ?>
                         The Devil's Grocery Bag <span class="badge" id="comparison-count"><?php echo $cart_count; ?></span>
                     </a>

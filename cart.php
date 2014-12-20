@@ -19,11 +19,11 @@ else if($action=='quantity_updated'){
     echo "</div>";
 }
 
-if(count($_SESSION['cart_items'])>0){
+if(count($_SESSION['cart'])>0){
     
     // get the product ids
     $ids = "";
-    foreach($_SESSION['cart_items'] as $id=>$value){
+    foreach($_SESSION['cart'] as $id=>$value){
         $ids = $ids . $id . ",";
     }
     // remove the last comma
@@ -38,6 +38,8 @@ if(count($_SESSION['cart_items'])>0){
             echo "<th>Band</th>";
             echo "<th>Format</th>";
             echo "<th>Price</th>";
+            echo "<th style='width:15em;'>Quantity</th>";
+            echo "<th>Sub Total</th>";
             echo "<th>Action</th>";
         echo "</tr>";
     
@@ -50,22 +52,42 @@ if(count($_SESSION['cart_items'])>0){
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
         extract($row);
         
-        echo "<tr>";
-            echo "<td>{$album}</td>";
-            echo "<td>{$band}</td>";
-            echo "<td>{$format}</td>";
-            echo "<td>&#36;{$price}</td>";
-            echo "<td>";
-                echo "<a href='remove_from_cart.php?id={$id}&album={$album}' class='btn btn-danger'>";
-                    echo "<span class='glyphicon glyphicon-remove'></span> Remove from cart";
-                echo "</a>";
-            echo "</td>";
-        echo "</tr>";
+        $quantity=$_SESSION['cart'][$id]['quantity'];
+			$sub_total=$price*$quantity;
+			
+			echo "<tr>";
         
-        $total_price+=$price;
-    }
+				echo "<td>";
+					echo "<div class='product_id' style='display:none;'>{$id}</div>";
+					echo "<div class='product-name'>{$album}</div>";
+				echo "</td>";
+                echo "<td>{$band}</td>";
+                echo "<td>{$format}</td>";
+				echo "<td>&#36;{$price}</td>";
+				echo "<td>";
+					echo "<div class='input-group'>";
+						echo "<input type='text' name='quantity' value='{$quantity}' class='form-control'>";
+						echo "<span class='input-group-btn'>";
+							echo "<button class='btn btn-default update-quantity' type='button'>Update</button>";
+						echo "</span>";
+					echo "</div>";
+				echo "</td>";
+				echo "<td>&#36;{$sub_total}</td>";
+				echo "<td>";
+					echo "<a href='remove_from_cart.php?id={$id}&album={$album}' class='btn btn-danger'>";
+						echo "<span class='glyphicon glyphicon-remove'></span> Remove from cart";
+					echo "</a>";
+				echo "</td>";
+            echo "</tr>";
+			
+			$total_price+=$sub_total;
+		}
     
     echo "<tr>";
+        echo "<td></td>";
+        echo "<td></td>";
+        echo "<td></td>";
+        echo "<td></td>";
         echo "<td><b>Total</b></td>";
         echo "<td>&#36;{$total_price}</td>";
         echo "<td>";
